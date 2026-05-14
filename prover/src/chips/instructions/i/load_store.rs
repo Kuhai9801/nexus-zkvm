@@ -122,9 +122,7 @@ impl MachineChip for LoadStoreChip {
         traces.fill_columns(row_idx, ram_base_address, Column::RamBaseAddr);
 
         let alignment_divisor: Option<u8> = match vm_step.step.instruction.opcode.builtin() {
-            Some(BuiltinOpcode::LH) | Some(BuiltinOpcode::LHU) | Some(BuiltinOpcode::SH) => {
-                Some(2)
-            }
+            Some(BuiltinOpcode::LH) | Some(BuiltinOpcode::LHU) | Some(BuiltinOpcode::SH) => Some(2),
             Some(BuiltinOpcode::LW) | Some(BuiltinOpcode::SW) => Some(4),
             _ => None,
         };
@@ -488,8 +486,7 @@ impl MachineChip for LoadStoreChip {
 
             eval.add_constraint(
                 is_word_access
-                    * (ram_base_addr[0].clone()
-                        - alignment_quotient * BaseField::from(4u32)),
+                    * (ram_base_addr[0].clone() - alignment_quotient * BaseField::from(4u32)),
             );
         }
         let carry_flag = trace_eval!(trace_eval, Column::CarryFlag);

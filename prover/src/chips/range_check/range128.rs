@@ -72,8 +72,7 @@ impl MachineChip for Range128Chip {
         let [is_lb] = traces.column(row_idx, Column::IsLb);
         fill_main_col(qt_aux, is_lb, side_note);
 
-        let [alignment_quotient] =
-            traces.column(row_idx, Column::RamBaseAddrAlignmentQuotient);
+        let [alignment_quotient] = traces.column(row_idx, Column::RamBaseAddrAlignmentQuotient);
         let [is_lh_alignment] = traces.column(row_idx, Column::IsLh);
         let [is_lhu] = traces.column(row_idx, Column::IsLhu);
         let [is_lw] = traces.column(row_idx, Column::IsLw);
@@ -212,8 +211,7 @@ impl MachineChip for Range128Chip {
             &[qt_aux],
         ));
 
-        let [alignment_quotient] =
-            trace_eval.column_eval(Column::RamBaseAddrAlignmentQuotient);
+        let [alignment_quotient] = trace_eval.column_eval(Column::RamBaseAddrAlignmentQuotient);
         let [is_lh_alignment] = trace_eval.column_eval(Column::IsLh);
         let [is_lhu] = trace_eval.column_eval(Column::IsLhu);
         let [is_lw] = trace_eval.column_eval(Column::IsLw);
