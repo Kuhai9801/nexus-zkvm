@@ -1160,6 +1160,11 @@ mod test {
     }
 
     #[test]
+    fn test_unaligned_lhu_rejected_in_air() {
+        assert_alignment_constraints_reject(Column::IsLhu, 0x0000_1001, 0);
+    }
+
+    #[test]
     fn test_unaligned_lw_rejected_in_air() {
         assert_alignment_constraints_reject(Column::IsLw, 0x0000_1002, 0);
     }
@@ -1170,9 +1175,17 @@ mod test {
     }
 
     #[test]
-    fn test_aligned_lh_and_lw_accepted_in_air() {
+    fn test_issue_605_unaligned_word_store_rejected_in_air() {
+        assert_alignment_constraints_reject(Column::IsSw, 0x0000_1002, 0);
+    }
+
+    #[test]
+    fn test_aligned_halfword_and_word_accesses_accepted_in_air() {
         assert_chip::<LoadStoreChip>(alignment_trace(Column::IsLh, 0x0000_1002, 1), None);
+        assert_chip::<LoadStoreChip>(alignment_trace(Column::IsLhu, 0x0000_1002, 1), None);
         assert_chip::<LoadStoreChip>(alignment_trace(Column::IsLw, 0x0000_1004, 1), None);
+        assert_chip::<LoadStoreChip>(alignment_trace(Column::IsSh, 0x0000_1002, 1), None);
+        assert_chip::<LoadStoreChip>(alignment_trace(Column::IsSw, 0x0000_1004, 1), None);
     }
 
     #[test]
